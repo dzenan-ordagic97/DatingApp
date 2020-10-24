@@ -10,6 +10,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimeAgoPipe } from 'time-ago-pipe';
+import {Pipe, PipeTransform} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -42,7 +44,11 @@ export class CustomHammerConfig extends HammerGestureConfig {
     rotate: { enable: false}
   };
 }
-
+@Pipe({
+  name: 'timeAgo',
+  pure: false
+})
+export class TimeAgoExtendsPipe extends TimeAgoPipe{}
 @NgModule({
   declarations: [			
     AppComponent,
@@ -56,6 +62,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MemberDetailComponent,
     MemberEditComponent,
     PhotoEditorComponent,
+    TimeAgoExtendsPipe
    ],
   imports: [
     BrowserModule,
