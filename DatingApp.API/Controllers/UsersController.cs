@@ -69,5 +69,32 @@ namespace DatingApp.API.Controllers
             
             throw new Exception($"Updating user {id} failed on save");
         }
+        [HttpPost("{id}/like/{recipientID}")]
+        public async Task<IActionResult> LikeUser(int id, int recipientID)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+            
+            var like = await _repo.GetLike(id, recipientID);
+
+            if (like != null)
+                return BadRequest("You already liked this user");
+
+            if (await _repo.GetUser(recipientID) == null)
+                return NotFound();
+            
+            like = new Models.Like{
+                LikerID = id,
+                LikeeID = recipientID
+            };
+
+            _repo.Add< Models.Like>(like);
+
+            if (await _repo.SaveAll())
+                return Ok();
+            
+            return BadRequest("Failed to like user");
+
+        }
     }
 }
