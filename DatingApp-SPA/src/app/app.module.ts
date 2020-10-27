@@ -14,6 +14,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 import {Pipe, PipeTransform} from '@angular/core';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -27,6 +28,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { appRoutes } from './routes';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { AlertifyService } from './_services/alertify.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
@@ -37,6 +39,8 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messages.resolver';
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -65,10 +69,12 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe{}
     MemberDetailComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-    TimeAgoExtendsPipe
+    TimeAgoExtendsPipe,
+    MemberMessagesComponent
    ],
   imports: [
     BrowserModule,
+    CommonModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -96,6 +102,7 @@ export class TimeAgoExtendsPipe extends TimeAgoPipe{}
     AuthGuard,
     UserService,
     MemberDetailResolver,
+    MessagesResolver,
     ListsResolver,
     MemberListResolver,
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
